@@ -36,35 +36,61 @@ def Forma():
             glVertex2iv(vertices[vertice])
     glEnd()
 
-def main():
-    angulo = 0
+def PontoInicial():
     pygame.init()
     display = (800,600)
     pygame.display.set_mode(display, DOUBLEBUF|OPENGL)
 
     gluPerspective(45, (display[0]/display[1]), 0.1, 50.0)
 
-    glTranslatef(1.0, 1.0, -10)
+    glTranslatef(0.0, 0.0, -25)
 
     while True:
-        # if condicao == 'Y':
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
 
-        glRotatef(angulo, 0, 0, 1)
-        angulo += 0.2
+        glRotatef(0, 0, 0, 0)
         glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
         Forma()
         pygame.display.flip()
         pygame.time.wait(10)
 
-            # print('Deseja voltar para a posição inicial [Y/N]? ')
-            # condicao = input()
-            # if condicao == 'N':
-            #     pygame.quit()
-            #     quit()
+def PontoMudado(x, y, angulo):
+    pygame.init()
+    display = (800,600)
+    pygame.display.set_mode(display, DOUBLEBUF|OPENGL)
+
+    gluPerspective(45, (display[0]/display[1]), 0.1, 50.0)
+
+    
+
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+
+        glTranslatef(x, y, -25)
+        glRotatef(0, 0, 0, 0)
+        glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
+        Forma()
+        pygame.display.flip()
+        pygame.time.wait(10)
 
 
-main()
+print('Deseja rotacionar e transladar o cubo [Y/N]? ')
+condicao = input()
+
+if condicao == 'N' or condicao == 'n':
+    PontoInicial()
+
+if condicao == 'Y' or condicao == 'y':
+    print('Qual a coordenada do ponto x? ')
+    x = int(input())
+    print('Qual a coordenada do ponto y? ')
+    y = int(input())
+    print('Qual o ângulo de rotação? ')
+    angulo = int(input())
+    PontoMudado(x, y, angulo)

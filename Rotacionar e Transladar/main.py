@@ -33,7 +33,18 @@ def Forma():
     glBegin(GL_LINES)
     for aresta in arestas:
         for vertice in aresta:
+            glColor3f(1.0, 0.0, 0.0)
             glVertex2iv(vertices[vertice])
+    glEnd()
+
+def Grid():
+    glBegin(GL_LINES)
+    glColor3f(0.5, 0.5, 0.5)
+    for i in range(-25, 26):
+        glVertex2f(i, -25)
+        glVertex2f(i, 25)
+        glVertex2f(-25, i)
+        glVertex2f(25, i)
     glEnd()
 
 def PontoInicial():
@@ -44,6 +55,7 @@ def PontoInicial():
     gluPerspective(45, (display[0]/display[1]), 0.1, 50.0)
 
     glTranslatef(0.0, 0.0, -25)
+    glRotatef(0, 0, 0, 0)
 
     while True:
         for event in pygame.event.get():
@@ -51,8 +63,8 @@ def PontoInicial():
                 pygame.quit()
                 quit()
 
-        glRotatef(0, 0, 0, 0)
         glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
+        Grid()
         Forma()
         pygame.display.flip()
         pygame.time.wait(10)
@@ -64,7 +76,8 @@ def PontoMudado(x, y, angulo):
 
     gluPerspective(45, (display[0]/display[1]), 0.1, 50.0)
 
-    
+    glTranslatef(x, y, -25)
+    glRotatef(angulo, 0, 0, 1)
 
     while True:
         for event in pygame.event.get():
@@ -72,9 +85,8 @@ def PontoMudado(x, y, angulo):
                 pygame.quit()
                 quit()
 
-        glTranslatef(x, y, -25)
-        glRotatef(0, 0, 0, 0)
         glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
+        Grid()
         Forma()
         pygame.display.flip()
         pygame.time.wait(10)

@@ -26,9 +26,6 @@ arestas = (
     (7,0)
     )
 
-# print('Deseja rotacionar o cubo [Y/N]? ')
-# condicao = input()
-
 def Forma():
     glBegin(GL_LINES)
     for aresta in arestas:
@@ -40,11 +37,11 @@ def Forma():
 def Grid():
     glBegin(GL_LINES)
     glColor3f(0.5, 0.5, 0.5)
-    for i in range(-25, 26):
-        glVertex2f(i, -25)
-        glVertex2f(i, 25)
-        glVertex2f(-25, i)
-        glVertex2f(25, i)
+    for i in range(-10, 11):
+        glVertex2f(i, -10)
+        glVertex2f(i, 10)
+        glVertex2f(-10, i)
+        glVertex2f(10, i)
     glEnd()
 
 def PontoInicial():
@@ -52,9 +49,9 @@ def PontoInicial():
     display = (800,600)
     pygame.display.set_mode(display, DOUBLEBUF|OPENGL)
 
-    gluPerspective(45, (display[0]/display[1]), 0.1, 50.0)
-
-    glTranslatef(0.0, 0.0, -25)
+    gluOrtho2D(-10, 10, -10, 10)
+    
+    glTranslatef(0.0, 0.0, 0)
     glRotatef(0, 0, 0, 0)
 
     while True:
@@ -64,8 +61,10 @@ def PontoInicial():
                 quit()
 
         glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
+
         Grid()
         Forma()
+
         pygame.display.flip()
         pygame.time.wait(10)
 
@@ -74,10 +73,7 @@ def PontoMudado(x, y, angulo):
     display = (800,600)
     pygame.display.set_mode(display, DOUBLEBUF|OPENGL)
 
-    gluPerspective(45, (display[0]/display[1]), 0.1, 50.0)
-
-    glTranslatef(x, y, -25)
-    glRotatef(angulo, 0, 0, 1)
+    gluOrtho2D(-10, 10, -10, 10)
 
     while True:
         for event in pygame.event.get():
@@ -85,12 +81,18 @@ def PontoMudado(x, y, angulo):
                 pygame.quit()
                 quit()
 
-        glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
+        glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)     
+
         Grid()
+        
+        glPushMatrix()
+        glTranslatef(x, y, 0)
+        glRotatef(angulo, 0, 0, 1)
         Forma()
+        glPopMatrix()
+        
         pygame.display.flip()
         pygame.time.wait(10)
-
 
 print('Deseja rotacionar e transladar o cubo [Y/N]? ')
 condicao = input()

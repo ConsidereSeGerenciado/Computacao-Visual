@@ -1,3 +1,7 @@
+# Gabriel Maia Alves Araújo - 2022005689
+# Caio Teodoro Portela - 2020004501
+# CMCO05 - INTRODUÇÃO À COMPUTAÇÃO VISUAL - Questão 1 da P1
+
 import pygame
 from pygame.locals import *
 
@@ -44,33 +48,18 @@ def Grid():
         glVertex2f(10, i)
     glEnd()
 
-def PontoInicial():
+def Cor():
+    glBegin(GL_LINES)
+    glColor3f(0, 0, 1)
+    glVertex2f(0, -10)
+    glVertex2f(0, 10)
+    glVertex2f(-10, 0)
+    glVertex2f(10, 0)
+    glEnd()
+
+def Ponto(x, y, angulo):
     pygame.init()
-    display = (800,600)
-    pygame.display.set_mode(display, DOUBLEBUF|OPENGL)
-
-    gluOrtho2D(-10, 10, -10, 10)
-    
-    glTranslatef(0.0, 0.0, 0)
-    glRotatef(0, 0, 0, 0)
-
-    while True:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                quit()
-
-        glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
-
-        Grid()
-        Forma()
-
-        pygame.display.flip()
-        pygame.time.wait(10)
-
-def PontoMudado(x, y, angulo):
-    pygame.init()
-    display = (800,600)
+    display = (800,800)
     pygame.display.set_mode(display, DOUBLEBUF|OPENGL)
 
     gluOrtho2D(-10, 10, -10, 10)
@@ -79,12 +68,10 @@ def PontoMudado(x, y, angulo):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
-                quit()
-
-        glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)     
+                quit() 
 
         Grid()
-        
+        Cor()
         glPushMatrix()
         glTranslatef(x, y, 0)
         glRotatef(angulo, 0, 0, 1)
@@ -98,13 +85,13 @@ print('Deseja rotacionar e transladar o cubo [Y/N]? ')
 condicao = input()
 
 if condicao == 'N' or condicao == 'n':
-    PontoInicial()
+    x = 0
+    y = 0
+    angulo = 0
+    Ponto(x, y, angulo)
 
 if condicao == 'Y' or condicao == 'y':
-    print('Qual a coordenada do ponto x? ')
-    x = int(input())
-    print('Qual a coordenada do ponto y? ')
-    y = int(input())
-    print('Qual o ângulo de rotação? ')
-    angulo = int(input())
-    PontoMudado(x, y, angulo)
+    x = 5
+    y = 5
+    angulo = 45
+    Ponto(x, y, angulo)
